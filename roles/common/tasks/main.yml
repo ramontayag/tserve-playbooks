@@ -1,2 +1,15 @@
 ---
-- include: packages.yml
+- name: Update and upgrade apt packages
+  become: yes
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Install required packages
+  apt:
+    name:
+      - htop
+      - neovim
+      - git-core
+    state: present
+  become: yes
