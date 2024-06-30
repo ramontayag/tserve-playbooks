@@ -45,7 +45,7 @@
 
     - name: Add current user to the docker group
       user:
-        name: "{{ ansible_user }}"
+        name: "{{ ansible_user_id }}"
         groups: docker
         append: yes
         state: present
