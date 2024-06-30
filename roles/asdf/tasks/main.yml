@@ -1,37 +1,8 @@
 ---
-- name: Install dependencies for asdf
-  become: yes
-  apt:
-    name:
-      - git
-      - curl
-      - autoconf
-      - bison
-      - build-essential
-      - libssl-dev
-      - libyaml-dev
-      - libreadline6-dev
-      - zlib1g-dev
-      - libncurses5-dev
-      - libffi-dev
-      - libgdbm6
-      - libgdbm-dev
-      - libdb-dev
-    state: present
-    update_cache: yes
-
-- name: Clone asdf repository
-  git:
-    repo: 'https://github.com/asdf-vm/asdf.git'
-    dest: '{{ ansible_env.HOME }}/.asdf'
-    version: 'v0.10.2'
-    update: no
-
-- name: Add asdf to shell
-  become: yes
-  shell: |
-    echo -e '\n. $HOME/.asdf/asdf.sh' >> $HOME/.bashrc
-    echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> $HOME/.bashrc
-    source $HOME/.bashrc
-  args:
-    executable: /bin/bash
+- become: true
+  roles:
+    - ansible-role-asdf
+  vars:
+    asdf_plugins:
+      - name: nodejs
+        repository: https://github.com/asdf-vm/asdf-nodejs.git
