@@ -1,17 +1,18 @@
 ---
 - name: Install HoleSail globally using npm
-  become: yes
   npm:
     name: holesail
     global: yes
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_env.HOME }}/.asdf/bin:{{ ansible_env.HOME }}/.asdf/shims"
 
 - name: Verify HoleSail installation
-  become: yes
   command: holesail --version
   register: holesail_version
   changed_when: false  # This ensures Ansible does not treat this as a change
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_env.HOME }}/.asdf/bin:{{ ansible_env.HOME }}/.asdf/shims"
 
 - name: Print HoleSail version
-  become: yes
   debug:
     msg: "HoleSail version is {{ holesail_version.stdout }}"
