@@ -1,5 +1,5 @@
 - name: Install asdf and setup nodejs plugin
-  hosts: "*"
+  hosts: localhost
   become: true
   roles:
     - ansible-role-asdf
