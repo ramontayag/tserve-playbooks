@@ -1,14 +1,17 @@
 ---
 - name: Install HoleSail globally using npm
+  become: yes
   npm:
     name: holesail
     global: yes
 
 - name: Verify HoleSail installation
+  become: yes
   command: holesail --version
   register: holesail_version
   changed_when: false  # This ensures Ansible does not treat this as a change
 
 - name: Print HoleSail version
+  become: yes
   debug:
     msg: "HoleSail version is {{ holesail_version.stdout }}"
