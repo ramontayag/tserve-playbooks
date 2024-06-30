@@ -1,0 +1,40 @@
+---
+- name: Install asdf and npm on local machine
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    - name: Install dependencies for asdf
+      apt:
+        name:
+          - git
+          - curl
+          - autoconf
+          - bison
+          - build-essential
+          - libssl-dev
+          - libyaml-dev
+          - libreadline6-dev
+          - zlib1g-dev
+          - libncurses5-dev
+          - libffi-dev
+          - libgdbm6
+          - libgdbm-dev
+          - libdb-dev
+        state: present
+        update_cache: yes
+
+    - name: Clone asdf repository
+      git:
+        repo: 'https://github.com/asdf-vm/asdf.git'
+        dest: '{{ ansible_env.HOME }}/.asdf'
+        version: 'v0.10.2'
+        update: no
+
+    - name: Add asdf to shell
+      shell: |
+        echo -e '\n. $HOME/.asdf/asdf.sh' >> $HOME/.bashrc
+        echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> $HOME/.bashrc
+        source $HOME/.bashrc
+      args:
+        executable: /bin/bash

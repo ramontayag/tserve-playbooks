@@ -1,0 +1,27 @@
+---
+- name: Install asdf and npm on local machine
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    - name: Install asdf nodejs plugin
+      shell: >
+        source $HOME/.asdf/asdf.sh &&
+        asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+      args:
+        executable: /bin/bash
+
+    - name: Install Node.js using asdf
+      shell: >
+        source $HOME/.asdf/asdf.sh &&
+        asdf install nodejs latest &&
+        asdf global nodejs latest
+      args:
+        executable: /bin/bash
+
+    - name: Install npm
+      shell: >
+        source $HOME/.asdf/asdf.sh &&
+        npm install -g npm
+      args:
+        executable: /bin/bash
